@@ -7,15 +7,18 @@ function inject_script(tab) {
         chrome.tabs.executeScript(tab.id, {file: 'display-robot-company-panel.js'});
 }
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-});
-
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+function handleTabUpdate(tabId, changeInfo, tab) {
     if (changeInfo.status != 'complete')
         return;
     inject_script(tab);
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    return;
 });
 
 chrome.browserAction.onClicked.addListener(tab => {
-    //inject_script(tab);
+    chrome.tabs.onUpdated.removeListener(handleTabUpdate);
+    chrome.tabs.onUpdated.addListener(handleTabUpdate);
+    inject_script(tab);
 });
