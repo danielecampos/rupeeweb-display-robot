@@ -1,8 +1,10 @@
 'use strict';
 
-(function display_robot_dashboard_italy(interval) {
+(function display_robot_dashboard_italy() {
     var el = document.getElementsByClassName('reveal-overlay')[1];
     if (el) 
         el.style.display = 'none';
-    setTimeout(() => window.location.href = document.querySelector('.companies-container a').href, interval);    
-})(10000);
+    var wait_time_before_go = 10000;
+    var next_url = document.querySelector('.companies-container a').href;
+    setTimeout(() => window.location.href = next_url, wait_time_before_go);
+})();
